@@ -8,9 +8,6 @@ from datetime import datetime
 from discord.ext import tasks, commands
 
 
-RSI_LOWER_BOUND = 30
-RSI_UPPER_BOUND = 70
-
 bot = commands.Bot(
     command_prefix="!",
     intents=discord.Intents.default()
@@ -31,7 +28,7 @@ async def send_rsi_signal():
         interval=60,  # 1 hour
     )
 
-    if rsi < RSI_LOWER_BOUND or rsi > RSI_UPPER_BOUND:
+    if rsi < config.RSI_LOWER_BOUND or rsi > config.RSI_UPPER_BOUND:
         await channel.send(f"RSI is in the overbought or oversold zone! - {round(rsi, 2)}")
 
 

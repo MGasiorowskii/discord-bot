@@ -1,0 +1,16 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+"discord.py" = "==2.4.0"
+aiohttp = "~=3.9.5"
+pandas = "~=2.2.2"
+pandas-ta = "==0.3.14b0"
+numpy = "==1.26.4"
+
+[dev-packages]
+
+[requires]
+python_version = "3.12"

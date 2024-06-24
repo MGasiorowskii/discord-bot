@@ -1,10 +1,7 @@
+import config
 import aiohttp
 import pandas as pd
 import pandas_ta as ta
-
-BYBIT_BASE_URL = 'https://api-testnet.bybit.com'
-BYBIT_PRICE_INDEX_URL = BYBIT_BASE_URL + '/v5/market/index-price-kline'
-DEFAULT_RSI_PERIOD = 14
 
 
 async def get_historical_data(symbol: str, interval: int, category: str, period: int):
@@ -16,7 +13,7 @@ async def get_historical_data(symbol: str, interval: int, category: str, period:
     }
 
     async with aiohttp.ClientSession() as session:
-        async with session.get(BYBIT_PRICE_INDEX_URL, params=params) as response:
+        async with session.get(config.BYBIT_PRICE_INDEX_URL, params=params) as response:
             data = await response.json()
     return data
 
@@ -25,7 +22,7 @@ async def calculate_rsi(
         symbol: str,
         interval: int,
         category: str = 'linear',
-        period: int = DEFAULT_RSI_PERIOD
+        period: int = config.DEFAULT_RSI_PERIOD
 ):
     data = await get_historical_data(symbol, interval, category, period)
 
