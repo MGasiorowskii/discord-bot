@@ -4,7 +4,7 @@ import asyncio
 
 from utils import calculate_rsi
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from discord.ext import tasks, commands
 
 
@@ -35,12 +35,11 @@ async def send_rsi_signal():
 @send_rsi_signal.before_loop
 async def wait_for_full_hour():
     await bot.wait_until_ready()
-    while True:
-        now = datetime.now()
-        if now.minute == 0 and now.second < 10:
-            break
 
-        await asyncio.sleep(10)
+    now = datetime.now()
+    next_hour = (now + timedelta(hours=1)).replace(minute=0, second=1, microsecond=0)
+    time_to_full_hour = next_hour - now
+    await asyncio.sleep(time_to_full_hour.total_seconds())
 
 
 if __name__ == "__main__":

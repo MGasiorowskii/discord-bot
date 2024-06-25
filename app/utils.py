@@ -1,7 +1,8 @@
-import config
 import aiohttp
 import pandas as pd
 import pandas_ta as ta
+
+import config
 
 
 async def get_historical_data(symbol: str, interval: int, category: str, period: int):
@@ -31,5 +32,5 @@ async def calculate_rsi(
         columns=['timestamp', 'open', 'high', 'low', 'close']
     )
     df['close'] = df['close'].astype(float)
-    rsi = ta.rsi(df['close']).iloc[-1]
+    rsi = ta.rsi(df['close'], period).iloc[-1]
     return rsi
